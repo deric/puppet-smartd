@@ -54,6 +54,18 @@ describe 'smartd' do
       }
     end
 
+    context 'without devicescan' do
+      let(:params) do
+        {
+          devicescan: false,
+        }
+      end
+
+      it {
+        is_expected.not_to contain_file('/etc/smartd.conf')\
+          .with_content(%r{^DEVICESCAN})
+      }
+    end
 
     context 'with defaults' do
       let(:params) do
@@ -65,6 +77,25 @@ describe 'smartd' do
       it {
         is_expected.to contain_file('/etc/smartd.conf')\
           .with_content(%r{^DEFAULT -m root@example.com})
+      }
+    end
+
+    context 'with ATA disk' do
+      let(:params) do
+        {
+          disks: {
+            sda: {
+              model: 'SAMSUNG MZ7LN256',
+              type: 'ssd',
+              vendor: 'ATA'
+            }
+          }
+        }
+      end
+
+      it {
+        is_expected.to contain_file('/etc/smartd.conf')
+          .with_content(%r{^/dev/sda -d ata})
       }
     end
   end

@@ -13,6 +13,29 @@ Main class `smartd` supports following attributes:
  - `devicescan` When enabled will automatically detect all matching devices (restricted by `options`). Default: `false`
  - `options` DEVICESCAN options, e.g. `-d removable` will ignore errors on removable devices. Requires `devicescan: true`. Accepts string or an array or strings.
  - `defaults` Shared configuration directives can be specified e.g. common email `-m root@my.org`. Accepts string or an array or strings.
+ - `disks` Fact or Hash containing devices declaration
+ - `rules` Applied `smartd` options to disks definition.
+
+Puppet comes with a built-in  `$facts['disks']` (accessible also via `facter -y disks`), e.g.:
+
+```yaml
+nvme0n1:
+  model: "SAMSUNG MZQL2960HCJR-00A07"
+  serial: "S64FNE0R503522"
+  size: 894.25 GiB
+  size_bytes: 960197124096
+  type: ssd
+```
+that can be used to generate configuration (at least simple list of devices).
+
+The `rules` parameter can be used to define e.g. model/vendor specific rules that might be generalized.
+
+```yaml
+smartd::rules:
+  model:
+    match: SAMSUNG MZ7
+    options: -I 173     # ignore wear_level_count for disks matching this model
+```
 
 ## Configuration parameters
 

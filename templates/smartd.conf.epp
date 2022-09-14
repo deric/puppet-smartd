@@ -7,6 +7,10 @@ DEFAULT <% if $defaults =~ Array { -%>
 <%= $defaults -%>
 <% } %>
 <% } -%>
+<%# Generated devices from facts -%>
+<% $devices.each |$entry| { -%>
+<%= $entry %>
+<% } -%>
 <% if $devicescan { -%>
 # The word DEVICESCAN will cause any remaining lines in this
 # configuration file to be ignored: it tells smartd to scan for all

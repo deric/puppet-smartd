@@ -2,12 +2,11 @@
 #
 # Generate rules for S.M.A.R.T attributes monitoring
 #
-#
-# @param mailto
-#     E-mail address for notifications, multilple email addresses can be separated by comma
-#
 # @param disks
-#     Hash
+#     Hash with devices (device name => {attributes})
+#
+# @param rules
+#     Hash containing rules for assiging flags
 #
 # @param package_name
 #     Smartmontools package name
@@ -35,7 +34,13 @@
 # @param devicescan
 #     Whether enable automatic disk detection.
 #     Default: false
+#
 # @param options
+#     Arguments passed to devicescan devices
+#
+# @param defaults
+#     Common arguments for all devices
+#
 #
 #
 # @example
@@ -44,7 +49,6 @@ class smartd (
   String                  $service_name,
   Stdlib::Absolutepath    $config_file,
   String                  $package_name,
-  Optional[String]        $mailto = undef,
   String                  $package_ensure = 'present',
   Hash                    $disks = pick($facts['disks'], {}),
   Hash                    $rules = {},
@@ -77,10 +81,10 @@ class smartd (
     group   => 'root',
     mode    => '0644',
     content => epp("${module_name}/smartd.conf.epp", {
-      'disks'      => $disks,
-      'devicescan' => $devicescan,
-      'options'    => $options,
-      'defaults'   => $defaults,
+        'defaults'   => $defaults,
+        'devices'    => smartd::apply_rules($disks, $rules),
+        'devicescan' => $devicescan,
+        'options'    => $options,
     }),
     require => Package[$package_name],
   }
