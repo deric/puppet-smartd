@@ -1,10 +1,19 @@
 # Managed by Puppet
-<% unless empty($defaults) { -%>
-DEFAULT <%= $defaults.join(' ') %>
+<% if $defaults { -%>
+<%# Accept a String or an Array -%>
+DEFAULT <% if $defaults =~ Array { -%>
+<%= $defaults.join(' ') -%>
+<% } else { -%>
+<%= $defaults -%>
+<% } %>
 <% } -%>
 <% if $devicescan { -%>
 # The word DEVICESCAN will cause any remaining lines in this
 # configuration file to be ignored: it tells smartd to scan for all
 # ATA and SCSI devices.
-DEVICESCAN <%= $options.join(' ') %>
+DEVICESCAN <% if $options =~ Array { -%>
+<%= $options.join(' ') -%>
+<% } else { -%>
+<%= $options -%>
+<% } %>
 <% } -%>

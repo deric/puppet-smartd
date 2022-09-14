@@ -27,6 +27,34 @@ describe 'smartd' do
       }
     end
 
+    context 'with devicescan and string options' do
+      let(:params) do
+        {
+          devicescan: true,
+          options: '-d ata -H'
+        }
+      end
+
+      it {
+        is_expected.to contain_file('/etc/smartd.conf')\
+          .with_content(%r{^DEVICESCAN -d ata -H})
+      }
+    end
+
+    context 'with devicescan without options' do
+      let(:params) do
+        {
+          devicescan: true,
+        }
+      end
+
+      it {
+        is_expected.to contain_file('/etc/smartd.conf')\
+          .with_content(%r{^DEVICESCAN})
+      }
+    end
+
+
     context 'with defaults' do
       let(:params) do
         {

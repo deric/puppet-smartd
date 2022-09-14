@@ -52,8 +52,8 @@ class smartd (
   Boolean                 $manage_service = true,
   Stdlib::Ensure::Service $service_ensure = 'running',
   Boolean                 $devicescan = false,
-  Array[String]           $options = [],
-  Array[String]           $defaults = [],
+  Smartd::Config          $options = undef,
+  Smartd::Config          $defaults = undef,
 ) {
   if $manage_package {
     ensure_packages([$package_name], { ensure => $package_ensure })
