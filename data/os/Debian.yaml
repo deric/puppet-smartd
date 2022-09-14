@@ -1,0 +1,3 @@
+---
+smartd::config_file: /etc/smartd.conf
+smartd::service_name: smartd
