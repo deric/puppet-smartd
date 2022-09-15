@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.2.0 [2022-09-15]
+
+**Bugfixes**
+
+ - Changed semantics of rules from Hash to Array of Hashes in order to support multiple rules over the same attribute
+ - Debian service is called `smartmontools` but `smartd` works as an alias
+
+[Full diff](https://github.com/deric/puppet-smartd/compare/v0.1.0...v0.2.0)
+
+
 ## Release 0.1.0 [2022-09-15]
 
 **Features**
@@ -9,7 +19,5 @@ All notable changes to this project will be documented in this file.
  - Support matching disk attributes and appending smard config flags
  - Support matching by device name
  - Ignore certain devices
-
-**Bugfixes**
 
 **Known Issues**

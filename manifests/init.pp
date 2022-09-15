@@ -6,7 +6,7 @@
 #     Hash with devices (device name => {attributes})
 #
 # @param rules
-#     Hash containing rules for assiging flags
+#     An array of Hashes containing rules for assiging flags
 #
 # @param package_name
 #     Smartmontools package name
@@ -41,8 +41,6 @@
 # @param defaults
 #     Common arguments for all devices
 #
-#
-#
 # @example
 #   include smartd
 class smartd (
@@ -51,7 +49,7 @@ class smartd (
   String                  $package_name,
   String                  $package_ensure = 'present',
   Hash                    $disks = pick($facts['disks'], {}),
-  Hash                    $rules = {},
+  Array[Hash]             $rules = [],
   Boolean                 $manage_package = true,
   Boolean                 $manage_service = true,
   Stdlib::Ensure::Service $service_ensure = 'running',

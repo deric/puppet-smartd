@@ -45,7 +45,7 @@ The `rules` parameter can be used to define e.g. model/vendor specific rules tha
 
 ```yaml
 smartd::rules:
-  model:                # rule names match disk attributes, e.g. serial, type, size might be used
+  - attr: model         # attr value match disk attributes, e.g. vendor, type, etc. might be used
     match: SAMSUNG MZ7
     options: -I 173     # ignore wear_level_count for disks matching this model
 ```
@@ -54,10 +54,10 @@ Match device name using special key `$name`:
 
 ```yaml
 smartd::rules:
-  $name:
+  - attr: $name
     match: ^nvme  # regexp match
     options: -H   # will append all matching rules
-  type:
+  - attr: type
     match: ssd
     options:  -l error
 ```
@@ -70,7 +70,7 @@ Ignore device completely (will be ommited from the list):
 
 ```yaml
 smartd::rules:
-  vendor:
+  - attr: vendor
     match: DELL
     action: ignore
 ```
@@ -78,7 +78,7 @@ smartd::rules:
 Apply `megaraid` device type
 ```yaml
 smartd::rules:
-  model:
+  - atrr: model
     match: PERC
     options: -d megaraid,0
 ```

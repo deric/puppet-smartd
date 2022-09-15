@@ -8,7 +8,7 @@ Puppet::Functions.create_function(:'smartd::apply_rules') do
   #
   dispatch :default_impl do
     required_param 'Hash', :disks
-    required_param 'Hash', :rules
+    required_param 'Array', :rules
   end
 
   def default_impl(disks, rules)
@@ -23,7 +23,9 @@ Puppet::Functions.create_function(:'smartd::apply_rules') do
       end
 
       apply = true
-      rules.each do |rule, cond|
+      rules.each do |cond|
+        raise "Missing 'attr' in #{cond}" unless cond.key? 'attr'
+        rule = cond['attr']
         # match device name
         if rule == '$name'
           apply &= match_rule(disk, cond, name)

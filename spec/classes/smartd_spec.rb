@@ -109,12 +109,13 @@ describe 'smartd' do
               vendor: 'DELL'
             }
           },
-          rules: {
-            vendor: {
+          rules: [
+            {
+              attr: 'vendor',
               match: 'DELL',
               action: 'ignore',
-            }
-          }
+            },
+          ]
         }
       end
 
