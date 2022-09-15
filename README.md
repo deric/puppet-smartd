@@ -1,5 +1,8 @@
 # puppet-smartd
 
+[![Puppet
+Forge](http://img.shields.io/puppetforge/v/deric/smartd.svg)](https://forge.puppet.com/modules/deric/smartd) [![Build Status](https://img.shields.io/github/workflow/status/deric/puppet-smartd/Static%20&%20Spec%20Tests/master)](https://github.com/deric/puppet-smartd/actions?query=branch%3Amaster)
+
 Simplified `smartd` configuration management with Puppet.
 
 ## Usage
@@ -26,7 +29,7 @@ nvme0n1:
   size_bytes: 960197124096
   type: ssd
 ```
-that can be used to generate configuration (at least simple list of devices). Though any other fact or hardcoded hash of disks might be used
+that can be used to generate configuration (at least simple list of devices). Though any other fact or hardcoded hash of disks might be used.
 
 The `rules` parameter can be used to define e.g. model/vendor specific rules that might be generalized.
 
