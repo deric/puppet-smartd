@@ -15,13 +15,23 @@ Puppet::Functions.create_function(:'smartd::apply_rules') do
     devices = []
     disks.each do |name, params|
       disk = "/dev/#{name}"
-      if params.include? 'vendor'
-        disk << " -d #{params['vendor'].downcase}"
+      if params.key? 'vendor'
+        case params['vendor']
+        when 'ATA'
+          disk << " -d #{params['vendor'].downcase}"
+        end
       end
 
       rules.each do |rule, cond|
-        next unless params.include? rule
-        next unless cond.include? 'match'
+        # match device name
+        if rule == '$name'
+          if cond.key?('match') && %r{#{cond['match']}}.match?(name)
+            disk << " #{cond['options']}" if cond.key? 'options'
+          end
+        end
+        next unless params.key? rule
+        next unless cond.key? 'match'
+        # regexp match
         if %r{#{cond['match']}}.match?(params[rule])
           disk << " #{cond['options']}" if cond.key? 'options'
         end

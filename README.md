@@ -16,7 +16,7 @@ Main class `smartd` supports following attributes:
  - `disks` Fact or Hash containing devices declaration
  - `rules` Applied `smartd` options to disks definition.
 
-Puppet comes with a built-in  `$facts['disks']` (accessible also via `facter -y disks`), e.g.:
+By default Puppet built-in `$facts['disks']` is used (accessible also via `facter -y disks`), e.g.:
 
 ```yaml
 nvme0n1:
@@ -26,15 +26,24 @@ nvme0n1:
   size_bytes: 960197124096
   type: ssd
 ```
-that can be used to generate configuration (at least simple list of devices).
+that can be used to generate configuration (at least simple list of devices). Though any other fact or hardcoded hash of disks might be used
 
 The `rules` parameter can be used to define e.g. model/vendor specific rules that might be generalized.
 
 ```yaml
 smartd::rules:
-  model:
+  model:                # rule names match disk attributes, e.g. serial, type, size might be used
     match: SAMSUNG MZ7
     options: -I 173     # ignore wear_level_count for disks matching this model
+```
+
+Match device name using special key `$name`:
+
+```yaml
+smartd::rules:
+  $name:
+    match: ^nvme  # regexp match
+    options: -H
 ```
 
 ## Configuration parameters
