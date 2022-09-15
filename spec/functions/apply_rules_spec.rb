@@ -72,4 +72,27 @@ describe 'smartd::apply_rules' do
 
     it { is_expected.to run.with_params(disks, rules).and_return([]) }
   end
+
+  context 'with options array' do
+    disks = {
+      'sda' => {
+        'model' => 'Micron_1100_MTFD',
+        'vendor' => 'ATA',
+      }
+    }
+    it { is_expected.to run.with_params(disks, []).and_return(['/dev/sda -d ata']) }
+
+    rules = [
+      {
+        'attr' => 'model',
+        'match' => 'Micron',
+        'options' => [ '-i 173', '-U 198' ],
+      },
+    ]
+
+    it {
+      is_expected.to run.with_params(disks, rules)\
+                        .and_return(['/dev/sda -d ata -i 173 -U 198'])
+    }
+  end
 end

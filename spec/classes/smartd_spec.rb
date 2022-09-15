@@ -124,6 +124,40 @@ describe 'smartd' do
           .without_content(%r{^/dev/sda})
       }
     end
+
+    context 'with multiple rules' do
+      let(:params) do
+        {
+          disks: {
+            sda: {
+              model: 'Micron_1100_MTFDDAK256TBN',
+              type: 'ssd',
+              vendor: 'ATA'
+            }
+          },
+          rules: [
+            {
+              attr: 'model',
+              match: '^SAMSUNG MZ7',
+              options: '-i 173',
+            },
+            {
+              attr: 'model',
+              match: '^Micron_1100',
+              options: [
+                '-C 197',
+                '-U 198',
+              ],
+            },
+          ]
+        }
+      end
+
+      it {
+        is_expected.to contain_file('/etc/smartd.conf')
+          .with_content(%r{^/dev/sda -d ata -C 197 -U 198})
+      }
+    end
   end
 
   on_supported_os.each do |os, os_facts|

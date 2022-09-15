@@ -51,7 +51,12 @@ Puppet::Functions.create_function(:'smartd::apply_rules') do
             return false
           end
         elsif cond.key? 'options'
-          disk << " #{cond['options']}"
+          opts = if cond['options'].is_a? Array
+                   cond['options'].join(' ')
+                 else
+                   cond['options']
+                 end
+          disk << " #{opts}"
         end
       end
     end
