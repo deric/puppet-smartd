@@ -1,7 +1,7 @@
 # puppet-smartd
 
 [![Puppet
-Forge](http://img.shields.io/puppetforge/v/deric/smartd.svg)](https://forge.puppet.com/modules/deric/smartd) [![Build Status](https://img.shields.io/github/workflow/status/deric/puppet-smartd/Static%20&%20Spec%20Tests/master)](https://github.com/deric/puppet-smartd/actions?query=branch%3Amaster)
+Forge](http://img.shields.io/puppetforge/v/deric/smartd.svg)](https://forge.puppet.com/modules/deric/smartd) [![Build Status](https://img.shields.io/github/workflow/status/deric/puppet-smartd/Static%20&%20Spec%20Tests/master)](https://github.com/deric/puppet-smartd/actions?query=branch%3Amain)
 
 Simplified `smartd` configuration management with Puppet.
 
@@ -46,7 +46,23 @@ Match device name using special key `$name`:
 smartd::rules:
   $name:
     match: ^nvme  # regexp match
-    options: -H
+    options: -H   # will append all matching rules
+  type:
+    match: ssd
+    options:  -l error
+```
+this would output (assuming NVMe has attribute type with value `ssd`)
+```
+/dev/nvme0n1 -H -l error
+```
+
+Ignore device (e.g. hardware RAID) completely:
+
+```yaml
+smartd::rules:
+  vendor:
+    match: DELL
+    action: ignore
 ```
 
 ## Configuration parameters

@@ -52,4 +52,21 @@ describe 'smartd::apply_rules' do
                         .and_return(['/dev/sda -d ata', '/dev/nvme0n1 -H'])
     }
   end
+
+  context 'with action=ignore' do
+    disks = {
+      'sda' => {
+        'model' => 'PERC H730P Mini',
+        'vendor' => 'DELL',
+      }
+    }
+    rules = {
+      'vendor' => {
+        'match' => 'DELL',
+        'action' => 'ignore',
+      }
+    }
+
+    it { is_expected.to run.with_params(disks, rules).and_return([]) }
+  end
 end

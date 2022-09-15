@@ -98,6 +98,31 @@ describe 'smartd' do
           .with_content(%r{^/dev/sda -d ata})
       }
     end
+
+    context 'with hardware RAID' do
+      let(:params) do
+        {
+          disks: {
+            sda: {
+              model: 'PERC H730P Mini',
+              type: 'hdd',
+              vendor: 'DELL'
+            }
+          },
+          rules: {
+            vendor: {
+              match: 'DELL',
+              action: 'ignore',
+            }
+          }
+        }
+      end
+
+      it {
+        is_expected.to contain_file('/etc/smartd.conf')
+          .without_content(%r{^/dev/sda})
+      }
+    end
   end
 
   on_supported_os.each do |os, os_facts|

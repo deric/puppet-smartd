@@ -22,23 +22,37 @@ Puppet::Functions.create_function(:'smartd::apply_rules') do
         end
       end
 
+      apply = true
       rules.each do |rule, cond|
         # match device name
         if rule == '$name'
-          if cond.key?('match') && %r{#{cond['match']}}.match?(name)
-            disk << " #{cond['options']}" if cond.key? 'options'
-          end
+          apply &= match_rule(disk, cond, name)
         end
+        # check if rule names matches disk atrributes
         next unless params.key? rule
-        next unless cond.key? 'match'
-        # regexp match
-        if %r{#{cond['match']}}.match?(params[rule])
-          disk << " #{cond['options']}" if cond.key? 'options'
-        end
+        apply &= match_rule(disk, cond, params[rule])
       end
 
-      devices << disk
+      devices << disk if apply
     end
     devices
+  end
+
+  # check conditions if needle is found
+  def match_rule(disk, cond, needle)
+    # regexp match
+    if cond.key? 'match'
+      if %r{#{cond['match']}}.match?(needle)
+        if cond.key? 'action'
+          case cond['action']
+          when 'ignore'
+            return false
+          end
+        elsif cond.key? 'options'
+          disk << " #{cond['options']}"
+        end
+      end
+    end
+    true
   end
 end
