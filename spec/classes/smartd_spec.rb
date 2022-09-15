@@ -132,13 +132,16 @@ describe 'smartd' do
       it { is_expected.to compile }
       it { is_expected.to contain_class('smartd') }
       it { is_expected.to contain_package('smartmontools') }
-      it { is_expected.to contain_service('smartd') }
 
       case os_facts[:osfamily]
       when 'Debian', 'SuSE'
         it { is_expected.to contain_file('/etc/smartd.conf').with_ensure('file') }
+        it { is_expected.to contain_service('smartmontools') }
       when 'RedHat'
         it { is_expected.to contain_file('/etc/smartmontools/smartd.conf').with_ensure('file') }
+        it { is_expected.to contain_service('smartd') }
+      else
+        it { is_expected.to contain_service('smartd') }
       end
     end
   end

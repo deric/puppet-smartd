@@ -1,3 +1,4 @@
 ---
 smartd::config_file: /etc/smartd.conf
-smartd::service_name: smartd
+# there seems to be an alias from smartd
+smartd::service_name: smartmontools
