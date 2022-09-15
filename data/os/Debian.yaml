@@ -1,4 +1,4 @@
 ---
 smartd::config_file: /etc/smartd.conf
-# there seems to be an alias from smartd
+# since Debian 11 the service is called smartmontools (though an smartd alias might work)
 smartd::service_name: smartmontools

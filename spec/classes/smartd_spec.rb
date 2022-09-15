@@ -143,7 +143,13 @@ describe 'smartd' do
 
       case os_facts[:osfamily]
       when 'Debian', 'SuSE'
-        it { is_expected.to contain_service('smartmontools') }
+        case os_facts[:operatingsystemmajrelease]
+        when '9', '10'
+          # rubocop:disable RSpec/RepeatedExample
+          it { is_expected.to contain_service('smartd') }
+        else
+          it { is_expected.to contain_service('smartmontools') }
+        end
       else
         it { is_expected.to contain_service('smartd') }
       end
