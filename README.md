@@ -10,14 +10,24 @@ Simplified `smartd` configuration management with Puppet.
 ```puppet
 include smartd
 ```
+and confgure e-mail nofifications for all disks:
+```yaml
+smartd::defaults: '-a -m root@domain.org'
+```
+this would generate a `smartd.conf` based on `smartd::disks` (by default `$facts['disks']` is used):
+```
+DEFAULT -a -m root@domain.org
+/dev/sda -d ata
+/dev/sdb -d ata
+```
 
 Main class `smartd` supports following attributes:
 
- - `devicescan` When enabled will automatically detect all matching devices (restricted by `options`). Default: `false`
- - `options` DEVICESCAN options, e.g. `-d removable` will ignore errors on removable devices. Requires `devicescan: true`. Accepts string or an array or strings.
  - `defaults` Shared configuration directives can be specified e.g. common email `-m root@my.org`. Accepts string or an array or strings.
  - `disks` Fact or Hash containing devices declaration
  - `rules` Applied `smartd` options to disks definition.
+ - `devicescan` When enabled will automatically detect all matching devices (restricted by `options`). Default: `false`
+ - `options` DEVICESCAN options, e.g. `-d removable` will ignore errors on removable devices. Requires `devicescan: true`. Accepts string or an array or strings.
 
 By default Puppet built-in `$facts['disks']` is used (accessible also via `facter -y disks`), e.g.:
 
@@ -56,7 +66,7 @@ this would output (assuming NVMe has attribute type with value `ssd`)
 /dev/nvme0n1 -H -l error
 ```
 
-Ignore device (e.g. hardware RAID) completely:
+Ignore device completely (will be ommited from the list):
 
 ```yaml
 smartd::rules:
@@ -65,13 +75,23 @@ smartd::rules:
     action: ignore
 ```
 
+Apply `megaraid` device type
+```yaml
+smartd::rules:
+  model:
+    match: PERC
+    options: -d megaraid,0
+```
+
 ## Configuration parameters
 
 See [man smartd.conf](https://linux.die.net/man/5/smartd.conf) for full configuration specification.
 
+  * `-a` equivalent of `-H -f -t -l error -l selftest -l selfteststs -C 197 -U 198`
   * `-m` email address for notifications
-  * `-d` device type `ata`, `scsi`
+  * `-d` device type `auto`,`ata`, `scsi`,`nvme`,`ignore`,`removable`
   * `-H` perform S.M.A.R.T health check, i.e. `smartctl -H /dev/sda`
+  * `-i` ignore failure of Usage Attributes (e.g. percent of lifetime used)
 
 ## Examples
 
