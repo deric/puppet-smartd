@@ -1,7 +1,7 @@
 # puppet-smartd
 
 [![Puppet
-Forge](http://img.shields.io/puppetforge/v/deric/smartd.svg)](https://forge.puppet.com/modules/deric/smartd) [![Build Status](https://img.shields.io/github/workflow/status/deric/puppet-smartd/Static%20&%20Spec%20Tests/master)](https://github.com/deric/puppet-smartd/actions?query=branch%3Amain)
+Forge](http://img.shields.io/puppetforge/v/deric/smartd.svg)](https://forge.puppet.com/modules/deric/smartd) [![Build Status](https://github.com/deric/puppet-smartd/actions/workflows/spec.yml/badge.svg?branch=main)](https://github.com/deric/puppet-smartd/actions/workflows/spec.yml)
 
 Simplified `smartd` configuration management with Puppet.
 
