@@ -1,6 +1,6 @@
 {
   "name": "deric-smartd",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "author": "Tomas Barton",
   "summary": "Rule-based smartd service configuration management",
   "license": "Apache-2.0",
