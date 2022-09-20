@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.3.0 [2022-09-20]
+
+**Bugfixes**
+
+  - Fixed service name on Debian 10
+  - Fixed array options serialization
+
 ## Release 0.2.0 [2022-09-15]
 
 **Bugfixes**
