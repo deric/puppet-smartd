@@ -99,6 +99,24 @@ describe 'smartd' do
       }
     end
 
+    context 'with package_options' do
+      let(:params) do
+        {
+          package_options: ['-t', 'buster-backports']
+        }
+      end
+
+      it {
+        is_expected.to contain_package('smartmontools')
+          .with_ensure(%r{present|installed})
+      }
+
+      it {
+        is_expected.to contain_package('smartmontools')
+          .with_install_options(['-t', 'buster-backports'])
+      }
+    end
+
     context 'with hardware RAID' do
       let(:params) do
         {

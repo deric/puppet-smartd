@@ -56,9 +56,13 @@ class smartd (
   Boolean                 $devicescan = false,
   Smartd::Config          $options = undef,
   Smartd::Config          $defaults = undef,
+  Optional[Array]         $package_options = [],
 ) {
   if $manage_package {
-    ensure_packages([$package_name], { ensure => $package_ensure })
+    ensure_packages([$package_name], {
+      ensure => $package_ensure,
+      install_options => $package_options,
+    })
   }
 
   if $manage_service {
