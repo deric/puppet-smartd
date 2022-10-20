@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.4.0 [2022-10-20]
+
+**Features**
+
+  - Support passing package install options
+
+[Full diff](https://github.com/deric/puppet-smartd/compare/v0.3.0...v0.4.0)
+
 ## Release 0.3.0 [2022-09-20]
 
 **Bugfixes**
