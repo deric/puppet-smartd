@@ -30,10 +30,8 @@ describe 'smartd' do
       it { is_expected.to be_readable.by('group') }
     end
 
-    it 'start the service' do
-      run_shell("systemctl status #{service}", expect_failures: true) do |r|
-        expect(r.stdout.include?('smartd')).to be false
-      end
+    describe command("systemctl status #{service}") do
+      its(:stdout) { is_expected.to match(%r{smart}) }
     end
   end
 end
