@@ -18,6 +18,12 @@ appveyor.yml:
   paths:
     - '/.vscode/'
     - '/.devcontainer/'
+    - '.ruby-version'
 spec/spec_helper.rb:
-  mock_with: ':rspec'
   coverage_report: true
+Gemfile:
+  optional:
+    ':system_tests':
+      - gem: 'voxpupuli-acceptance'
+    ':release':
+      - gem: 'puppet-blacksmith'

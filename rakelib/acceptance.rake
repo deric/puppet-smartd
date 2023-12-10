@@ -1,0 +1,2 @@
+require 'voxpupuli/acceptance/rake'
+
