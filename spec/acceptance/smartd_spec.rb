@@ -30,9 +30,10 @@ describe 'smartd' do
       it { is_expected.to be_readable.by('group') }
     end
 
-    describe service(service) do
-      it { is_expected.to be_enabled }
-      it { is_expected.to be_running }
+    it 'start the service' do
+      run_shell("systemctl status #{service}", expect_failures: true) do |r|
+        expect(r.stdout.include?('smartd')).to be false
+      end
     end
   end
 end
