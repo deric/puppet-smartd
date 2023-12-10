@@ -41,6 +41,9 @@
 # @param defaults
 #     Common arguments for all devices
 #
+# @param package_options
+#     Install options passed to package installer
+#
 # @example
 #   include smartd
 class smartd (
@@ -56,7 +59,7 @@ class smartd (
   Boolean                 $devicescan = false,
   Smartd::Config          $options = undef,
   Smartd::Config          $defaults = undef,
-  Optional[Array]         $package_options = [],
+  Optional[Array]         $package_options = undef,
 ) {
   if $manage_package {
     ensure_packages([$package_name], {
