@@ -17,10 +17,8 @@ describe 'smartd' do
     end
 
     if os[:family] == 'debian'
-      service = 'smartmontools'
       config = '/etc/smartd.conf'
     elsif os[:family] == 'redhat'
-      service = 'smartd'
       config = '/etc/smartmontools/smartd.conf'
     else
       puts os[:family]
