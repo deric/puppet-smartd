@@ -62,7 +62,7 @@ class smartd (
   Optional[Array]         $package_options = undef,
 ) {
   if $manage_package {
-    ensure_packages([$package_name], {
+    stdlib::ensure_packages([$package_name], {
         ensure => $package_ensure,
         install_options => $package_options,
     })

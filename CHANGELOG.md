@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 1.0.0 [2024-06-21]
+
+**Breaking changes**
+
+  - use namespaced Puppet 4.x functions (require stdlib >= 9)
 
 ## Release 0.5.0 [2023-12-10]
 
