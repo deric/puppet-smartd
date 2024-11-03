@@ -3,6 +3,37 @@
 require 'spec_helper'
 
 describe 'smartd' do
+  # OS dependent tests
+  on_supported_os.each do |os, os_facts|
+    context "on #{os}" do
+      let(:facts) { os_facts }
+
+      it { is_expected.to compile }
+      it { is_expected.to contain_class('smartd') }
+      it { is_expected.to contain_package('smartmontools') }
+
+      case os_facts[:os]['family']
+      when 'RedHat'
+        it { is_expected.to contain_file('/etc/smartmontools/smartd.conf').with_ensure('file') }
+      else
+        it { is_expected.to contain_file('/etc/smartd.conf').with_ensure('file') }
+      end
+
+      case os_facts[:os]['family']
+      when 'Debian', 'SuSE'
+        case os_facts[:os]['release']['major']
+        when '9', '10'
+          # rubocop:disable RSpec/RepeatedExample
+          it { is_expected.to contain_service('smartd') }
+        else
+          it { is_expected.to contain_service('smartmontools') }
+        end
+      else
+        it { is_expected.to contain_service('smartd') }
+      end
+    end
+  end
+
   describe 'Update smartd config' do
     # OS is irrelevant, template shouldn't be OS dependent
     let(:facts) do
@@ -175,36 +206,6 @@ describe 'smartd' do
         is_expected.to contain_file('/etc/smartd.conf')
           .with_content(%r{^/dev/sda -d ata -C 197 -U 198})
       }
-    end
-  end
-
-  on_supported_os.each do |os, os_facts|
-    context "on #{os}" do
-      let(:facts) { os_facts }
-
-      it { is_expected.to compile }
-      it { is_expected.to contain_class('smartd') }
-      it { is_expected.to contain_package('smartmontools') }
-
-      case os_facts[:osfamily]
-      when 'RedHat'
-        it { is_expected.to contain_file('/etc/smartmontools/smartd.conf').with_ensure('file') }
-      else
-        it { is_expected.to contain_file('/etc/smartd.conf').with_ensure('file') }
-      end
-
-      case os_facts[:osfamily]
-      when 'Debian', 'SuSE'
-        case os_facts[:operatingsystemmajrelease]
-        when '9', '10'
-          # rubocop:disable RSpec/RepeatedExample
-          it { is_expected.to contain_service('smartd') }
-        else
-          it { is_expected.to contain_service('smartmontools') }
-        end
-      else
-        it { is_expected.to contain_service('smartd') }
-      end
     end
   end
 end
