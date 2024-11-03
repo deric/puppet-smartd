@@ -2,11 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 1.1.0 [2024-11-03]
+
+ - Replace `stdlib::ensure_packages` with `ensure_resources` which doesn't require stdlib >=9
+ - Use hierarchical facts in tests
+
+[Full diff](https://github.com/deric/puppet-smartd/compare/v1.0.0...v1.1.0)
+
 ## Release 1.0.0 [2024-06-21]
 
 **Breaking changes**
 
   - use namespaced Puppet 4.x functions (require stdlib >= 9)
+
+[Full diff](https://github.com/deric/puppet-smartd/compare/v0.5.0...v1.0.0)
+
 
 ## Release 0.5.0 [2023-12-10]
 

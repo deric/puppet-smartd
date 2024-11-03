@@ -1,6 +1,6 @@
 {
   "name": "deric-smartd",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Tomas Barton",
   "summary": "Rule-based smartd service configuration management",
   "license": "Apache-2.0",
@@ -8,7 +8,7 @@
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 9.0.0 < 10.0.0"
+      "version_requirement": ">= 8.6.0 < 10.0.0"
     }
   ],
   "operatingsystem_support": [
