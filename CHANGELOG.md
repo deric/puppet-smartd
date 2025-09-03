@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 2.0.0 [2025-09-03]
+
+ - Deep merge for `smartd::rules`
+ - Add support for Debian 13, Ubuntu 24.04, RedHat 9
+ - Drop Debian 10, CentOS 7 support
+
+[Full diff](https://github.com/deric/puppet-smartd/compare/v1.1.0...v2.0.0)
+
+
 ## Release 1.1.0 [2024-11-03]
 
  - Replace `stdlib::ensure_packages` with `ensure_resources` which doesn't require stdlib >=9

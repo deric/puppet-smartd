@@ -1,6 +1,6 @@
 {
   "name": "deric-smartd",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "author": "Tomas Barton",
   "summary": "Rule-based smartd service configuration management",
   "license": "Apache-2.0",
@@ -15,7 +15,8 @@
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-        "7"
+        "8",
+        "9"
       ]
     },
     {
@@ -27,7 +28,8 @@
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "8"
+        "8",
+        "9"
       ]
     },
     {
