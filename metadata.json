@@ -1,6 +1,6 @@
 {
   "name": "deric-smartd",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Tomas Barton",
   "summary": "Rule-based smartd service configuration management",
   "license": "Apache-2.0",
@@ -39,16 +39,17 @@
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "10",
         "11",
-        "12"
+        "12",
+        "13"
       ]
     },
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
         "20.04",
-        "22.04"
+        "22.04",
+        "24.04"
       ]
     },
     {
