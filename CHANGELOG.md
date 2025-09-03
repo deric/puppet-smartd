@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 2.1.0 [2025-09-03]
+
+ - Avoid forcing `-d ata` type to ata devices (can be done using rules)
+
+[Full diff](https://github.com/deric/puppet-smartd/compare/v2.0.0...v2.1.0)
+
+
 ## Release 2.0.0 [2025-09-03]
 
  - Deep merge for `smartd::rules`
