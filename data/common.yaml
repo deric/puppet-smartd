@@ -1,2 +1,5 @@
 ---
 smartd::package_name: smartmontools
+lookup_options:
+  smartd::rules:
+    merge: deep
