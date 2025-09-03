@@ -126,7 +126,33 @@ describe 'smartd' do
 
       it {
         is_expected.to contain_file('/etc/smartd.conf')
-          .with_content(%r{^/dev/sda -d ata})
+          .with_content(%r{^/dev/sda$})
+      }
+    end
+
+    context 'with ATA disk and type detection' do
+      let(:params) do
+        {
+          disks: {
+            sda: {
+              model: 'SAMSUNG MZ7LN256',
+              type: 'ssd',
+              vendor: 'ATA'
+            }
+          },
+          rules: [
+            {
+              attr: 'vendor',
+              match: 'ATA',
+              options: '-d ata',
+            },
+          ]
+        }
+      end
+
+      it {
+        is_expected.to contain_file('/etc/smartd.conf')
+          .with_content(%r{^/dev/sda -d ata$})
       }
     end
 
@@ -204,7 +230,7 @@ describe 'smartd' do
 
       it {
         is_expected.to contain_file('/etc/smartd.conf')
-          .with_content(%r{^/dev/sda -d ata -C 197 -U 198})
+          .with_content(%r{^/dev/sda -C 197 -U 198})
       }
     end
   end

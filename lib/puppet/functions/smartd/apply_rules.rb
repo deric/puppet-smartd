@@ -15,13 +15,6 @@ Puppet::Functions.create_function(:'smartd::apply_rules') do
     devices = []
     disks.each do |name, params|
       disk = "/dev/#{name}"
-      if params.key? 'vendor'
-        case params['vendor']
-        when 'ATA'
-          disk << " -d #{params['vendor'].downcase}"
-        end
-      end
-
       apply = true
       rules.each do |cond|
         raise "Missing 'attr' in #{cond}" unless cond.key? 'attr'

@@ -13,7 +13,7 @@ describe 'smartd::apply_rules' do
         'vendor' => 'ATA',
       }
     }
-    it { is_expected.to run.with_params(disks, []).and_return(['/dev/sda -d ata']) }
+    it { is_expected.to run.with_params(disks, []).and_return(['/dev/sda']) }
 
     rules = [
       {
@@ -25,7 +25,7 @@ describe 'smartd::apply_rules' do
 
     it {
       is_expected.to run.with_params(disks, rules)\
-                        .and_return(['/dev/sda -d ata -I 173'])
+                        .and_return(['/dev/sda -I 173'])
     }
   end
 
@@ -47,11 +47,11 @@ describe 'smartd::apply_rules' do
       },
     ]
 
-    it { is_expected.to run.with_params(disks, []).and_return(['/dev/sda -d ata', '/dev/nvme0n1']) }
+    it { is_expected.to run.with_params(disks, []).and_return(['/dev/sda', '/dev/nvme0n1']) }
 
     it {
       is_expected.to run.with_params(disks, rules)\
-                        .and_return(['/dev/sda -d ata', '/dev/nvme0n1 -H'])
+                        .and_return(['/dev/sda', '/dev/nvme0n1 -H'])
     }
   end
 
@@ -80,7 +80,7 @@ describe 'smartd::apply_rules' do
         'vendor' => 'ATA',
       }
     }
-    it { is_expected.to run.with_params(disks, []).and_return(['/dev/sda -d ata']) }
+    it { is_expected.to run.with_params(disks, []).and_return(['/dev/sda']) }
 
     rules = [
       {
@@ -92,7 +92,7 @@ describe 'smartd::apply_rules' do
 
     it {
       is_expected.to run.with_params(disks, rules)\
-                        .and_return(['/dev/sda -d ata -i 173 -U 198'])
+                        .and_return(['/dev/sda -i 173 -U 198'])
     }
   end
 end
