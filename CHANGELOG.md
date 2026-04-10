@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 2.2.0 [2026-04-10]
+
+ - PDK update
+ - [Support running daily disk self-tests on randomized hours](https://github.com/deric/puppet-smartd/pull/4)
+
+[Full diff](https://github.com/deric/puppet-smartd/compare/v2.1.0...v2.2.0)
+
 ## Release 2.1.0 [2025-09-03]
 
  - Avoid forcing `-d ata` type to ata devices (can be done using rules)
