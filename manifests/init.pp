@@ -124,10 +124,10 @@ class smartd (
     group   => 'root',
     mode    => '0644',
     content => epp("${module_name}/smartd.conf.epp", {
-      'defaults'   => $_defaults,
-      'devices'    => smartd::apply_rules($disks, $rules),
-      'devicescan' => $devicescan,
-      'options'    => $options,
+        'defaults'   => $_defaults,
+        'devices'    => smartd::apply_rules($disks, $rules),
+        'devicescan' => $devicescan,
+        'options'    => $options,
     }),
     require => Package[$package_name],
   }
