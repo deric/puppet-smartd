@@ -110,7 +110,11 @@ class smartd (
 
     $disk_check = "-o on -S on -s (S/../.././${daily}|L/../../6/${weekly})"
     if $defaults {
-      $defaults + $disk_check
+      if $defaults =~ Array {
+        $defaults + [$disk_check]
+      } else {
+        [$defaults, $disk_check]
+      }
     } else {
       [$disk_check]
     }
