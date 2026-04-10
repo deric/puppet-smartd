@@ -99,6 +99,8 @@ class smartd (
   }
 
   $_defaults = if $self_check {
+    # -o on: enable automatic offline actions
+    # -S on: enable SMART scheduling state
     # -s (S/...|L/...): S => short self-test daily at 02:00; L => long self-test weekly (Sat) at 03:00
     # - '-o on -S on -s (S/../.././02|L/../../6/03)'
     if $randomize_check_hour {
