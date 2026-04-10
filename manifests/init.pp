@@ -39,13 +39,14 @@
 #     Whether enable automatic self-health checks running regularly.
 #
 # @param randomize_check_hour
-#     Whether check hour should be randomized in interval [0, {check_hour}]
+#     Whether the daily and weekly check hours should be randomized within the
+#     range from 0 up to the configured `check_daily_hour`/`check_weekly_hour`.
 #
 # @param check_daily_hour
-#     Uppper interval for randomized run hour
+#     Upper interval for the randomized daily run hour
 #
 # @param check_weekly_hour
-#     Uppper interval for randomized run hour
+#     Upper interval for the randomized weekly run hour
 #
 # @param options
 #     Arguments passed to devicescan devices
@@ -102,7 +103,7 @@ class smartd (
     # - '-o on -S on -s (S/../.././02|L/../../6/03)'
     if $randomize_check_hour {
       $daily = sprintf('%02d', fqdn_rand($check_daily_hour, 'S.M.A.R.T. daily'))
-      $weekly = sprintf('%02d',fqdn_rand($check_weekly_hour, 'S.M.A.R.T weekly'))
+      $weekly = sprintf('%02d',fqdn_rand($check_weekly_hour, 'S.M.A.R.T. weekly'))
     } else {
       $daily = sprintf('%02d', $check_daily_hour)
       $weekly = sprintf('%02d',$check_weekly_hour)

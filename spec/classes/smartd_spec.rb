@@ -253,7 +253,7 @@ describe 'smartd' do
 
       it {
         is_expected.to contain_file('/etc/smartd.conf')
-          .with_content(%r{-o on -S on -s \(S/../.././02|L/../../6/03\)})
+          .with_content(%r{-o on -S on -s \(S/../.././02\|L/../../6/03\)})
       }
     end
   end

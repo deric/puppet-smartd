@@ -28,10 +28,10 @@ Main class `smartd` supports following attributes:
  - `rules` Applied `smartd` options to disks definition.
  - `devicescan` When enabled will automatically detect all matching devices (restricted by `options`). Default: `false`
  - `options` DEVICESCAN options, e.g. `-d removable` will ignore errors on removable devices. Requires `devicescan: true`. Accepts string or an array or strings.
- - `self_check` enable running daily and weekly self-test. Default: `false`
- - `randomize_check_hour` Whether check hour should be randomized. Default: `true`
- - `check_daily_hour` Specify exact hour for short test, when `randomize_check_hour` is `true` this would be the upper interval bound.
- - `check_weekly_hour` Specify exact hour for long test, when `randomize_check_hour` is `true` this would be the upper interval bound.
+ - `self_check` Enable running daily and weekly self-tests. Default: `false`
+ - `randomize_check_hour` Whether the check hour should be randomized. Default: `true`
+ - `check_daily_hour` Specify the exact hour for the short test; when `randomize_check_hour` is `true`, this is the upper interval bound.
+ - `check_weekly_hour` Specify the exact hour for the long test; when `randomize_check_hour` is `true`, this is the upper interval bound.
 
 By default Puppet built-in `$facts['disks']` is used (accessible also via `facter -y disks`), e.g.:
 
