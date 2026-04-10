@@ -10,7 +10,7 @@
 
 ### Functions
 
-* [`smartd::apply_rules`](#smartd--apply_rules)
+* [`smartd::apply_rules`](#smartd--apply_rules): Generate smartd config from given rules
 
 ### Data types
 
@@ -141,7 +141,8 @@ Default value: `false`
 
 Data type: `Boolean`
 
-Whether check hour should be randomized in interval [0, {check_hour}]
+Whether the daily and weekly check hours should be randomized within the
+range from 0 up to the configured `check_daily_hour`/`check_weekly_hour`.
 
 Default value: `true`
 
@@ -149,7 +150,7 @@ Default value: `true`
 
 Data type: `Integer[0, 23]`
 
-Uppper interval for randomized run hour
+Upper interval for the randomized daily run hour
 
 Default value: `6`
 
@@ -157,7 +158,7 @@ Default value: `6`
 
 Data type: `Integer[0, 23]`
 
-Uppper interval for randomized run hour
+Upper interval for the randomized weekly run hour
 
 Default value: `6`
 
@@ -191,7 +192,7 @@ Default value: `undef`
 
 Type: Ruby 4.x API
 
-The smartd::apply_rules function.
+Generate smartd config from given rules
 
 #### `smartd::apply_rules(Hash $disks, Array $rules)`
 

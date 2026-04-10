@@ -1,4 +1,4 @@
-#
+# @summary Generate smartd config from given rules
 Puppet::Functions.create_function(:'smartd::apply_rules') do
   # @param disks
   # @param rules
