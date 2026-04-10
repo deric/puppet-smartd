@@ -233,5 +233,28 @@ describe 'smartd' do
           .with_content(%r{^/dev/sda -C 197 -U 198})
       }
     end
+
+    context 'with self-checks' do
+      let(:params) do
+        {
+          disks: {
+            sda: {
+              model: 'Micron_1100_MTFDDAK256TBN',
+              type: 'ssd',
+              vendor: 'ATA'
+            }
+          },
+          self_check: true,
+          randomize_check_hour: false,
+          check_daily_hour: 2,
+          check_weekly_hour: 3,
+        }
+      end
+
+      it {
+        is_expected.to contain_file('/etc/smartd.conf')
+          .with_content(%r{-o on -S on -s \(S/../.././02\|L/../../6/03\)})
+      }
+    end
   end
 end

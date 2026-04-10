@@ -35,6 +35,19 @@
 #     Whether enable automatic disk detection.
 #     Default: false
 #
+# @param self_check
+#     Whether enable automatic self-health checks running regularly.
+#
+# @param randomize_check_hour
+#     Whether the daily and weekly check hours should be randomized within the
+#     range from 0 up to the configured `check_daily_hour`/`check_weekly_hour`.
+#
+# @param check_daily_hour
+#     Upper interval for the randomized daily run hour
+#
+# @param check_weekly_hour
+#     Upper interval for the randomized weekly run hour
+#
 # @param options
 #     Arguments passed to devicescan devices
 #
@@ -57,6 +70,10 @@ class smartd (
   Boolean                 $manage_service = true,
   Stdlib::Ensure::Service $service_ensure = 'running',
   Boolean                 $devicescan = false,
+  Boolean                 $self_check = false,
+  Boolean                 $randomize_check_hour = true,
+  Integer[0, 23]          $check_daily_hour = 6,
+  Integer[0, 23]          $check_weekly_hour = 6,
   Smartd::Config          $options = undef,
   Smartd::Config          $defaults = undef,
   Optional[Array]         $package_options = undef,
@@ -81,13 +98,40 @@ class smartd (
     Package[$package_name] -> Service[$service_name]
   }
 
+  $_defaults = if $self_check {
+    # -o on: enable automatic offline actions
+    # -S on: enable SMART scheduling state
+    # -s (S/...|L/...): S => short self-test daily at 02:00; L => long self-test weekly (Sat) at 03:00
+    # - '-o on -S on -s (S/../.././02|L/../../6/03)'
+    if $randomize_check_hour {
+      $daily = sprintf('%02d', fqdn_rand($check_daily_hour, 'S.M.A.R.T. daily'))
+      $weekly = sprintf('%02d',fqdn_rand($check_weekly_hour, 'S.M.A.R.T. weekly'))
+    } else {
+      $daily = sprintf('%02d', $check_daily_hour)
+      $weekly = sprintf('%02d',$check_weekly_hour)
+    }
+
+    $disk_check = "-o on -S on -s (S/../.././${daily}|L/../../6/${weekly})"
+    if $defaults {
+      if $defaults =~ Array {
+        $defaults + [$disk_check]
+      } else {
+        [$defaults, $disk_check]
+      }
+    } else {
+      [$disk_check]
+    }
+  } else {
+    $defaults
+  }
+
   file { $config_file:
     ensure  => 'file',
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
     content => epp("${module_name}/smartd.conf.epp", {
-        'defaults'   => $defaults,
+        'defaults'   => $_defaults,
         'devices'    => smartd::apply_rules($disks, $rules),
         'devicescan' => $devicescan,
         'options'    => $options,

@@ -10,7 +10,7 @@
 
 ### Functions
 
-* [`smartd::apply_rules`](#smartd--apply_rules)
+* [`smartd::apply_rules`](#smartd--apply_rules): Generate smartd config from given rules
 
 ### Data types
 
@@ -44,6 +44,10 @@ The following parameters are available in the `smartd` class:
 * [`service_name`](#-smartd--service_name)
 * [`service_ensure`](#-smartd--service_ensure)
 * [`devicescan`](#-smartd--devicescan)
+* [`self_check`](#-smartd--self_check)
+* [`randomize_check_hour`](#-smartd--randomize_check_hour)
+* [`check_daily_hour`](#-smartd--check_daily_hour)
+* [`check_weekly_hour`](#-smartd--check_weekly_hour)
 * [`options`](#-smartd--options)
 * [`defaults`](#-smartd--defaults)
 * [`package_options`](#-smartd--package_options)
@@ -125,6 +129,39 @@ Default: false
 
 Default value: `false`
 
+##### <a name="-smartd--self_check"></a>`self_check`
+
+Data type: `Boolean`
+
+Whether enable automatic self-health checks running regularly.
+
+Default value: `false`
+
+##### <a name="-smartd--randomize_check_hour"></a>`randomize_check_hour`
+
+Data type: `Boolean`
+
+Whether the daily and weekly check hours should be randomized within the
+range from 0 up to the configured `check_daily_hour`/`check_weekly_hour`.
+
+Default value: `true`
+
+##### <a name="-smartd--check_daily_hour"></a>`check_daily_hour`
+
+Data type: `Integer[0, 23]`
+
+Upper interval for the randomized daily run hour
+
+Default value: `6`
+
+##### <a name="-smartd--check_weekly_hour"></a>`check_weekly_hour`
+
+Data type: `Integer[0, 23]`
+
+Upper interval for the randomized weekly run hour
+
+Default value: `6`
+
 ##### <a name="-smartd--options"></a>`options`
 
 Data type: `Smartd::Config`
@@ -155,7 +192,7 @@ Default value: `undef`
 
 Type: Ruby 4.x API
 
-The smartd::apply_rules function.
+Generate smartd config from given rules
 
 #### `smartd::apply_rules(Hash $disks, Array $rules)`
 
