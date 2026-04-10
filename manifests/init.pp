@@ -35,6 +35,18 @@
 #     Whether enable automatic disk detection.
 #     Default: false
 #
+# @param self_check
+#     Whether enable automatic self-health checks running regularly.
+#
+# @param randomize_check_hour
+#     Whether check hour should be randomized in interval [0, {check_hour}]
+#
+# @param check_daily_hour
+#     Uppper interval for randomized run hour
+#
+# @param check_weekly_hour
+#     Uppper interval for randomized run hour
+#
 # @param options
 #     Arguments passed to devicescan devices
 #
@@ -57,6 +69,10 @@ class smartd (
   Boolean                 $manage_service = true,
   Stdlib::Ensure::Service $service_ensure = 'running',
   Boolean                 $devicescan = false,
+  Boolean                 $self_check = false,
+  Boolean                 $randomize_check_hour = true,
+  Integer[1, 24]          $check_daily_hour = 6,
+  Integer[1, 24]          $check_weekly_hour = 6,
   Smartd::Config          $options = undef,
   Smartd::Config          $defaults = undef,
   Optional[Array]         $package_options = undef,
@@ -81,16 +97,37 @@ class smartd (
     Package[$package_name] -> Service[$service_name]
   }
 
+  $_defaults = if $self_check {
+    # -s (S/...|L/...): S => short self-test daily at 02:00; L => long self-test weekly (Sat) at 03:00
+    # - '-o on -S on -s (S/../.././02|L/../../6/03)'
+    if $randomize_check_hour {
+      $daily = sprintf('%02d', fqdn_rand($check_daily_hour, 'S.M.A.R.T. daily'))
+      $weekly = sprintf('%02d',fqdn_rand($check_weekly_hour, 'S.M.A.R.T weekly'))
+    } else {
+      $daily = sprintf('%02d', $check_daily_hour)
+      $weekly = sprintf('%02d',$check_weekly_hour)
+    }
+
+    $disk_check = "-o on -S on -s (S/../.././${daily}|L/../../6/${weekly})"
+    if $defaults {
+      $defaults + $disk_check
+    } else {
+      [$disk_check]
+    }
+  } else {
+    $defaults
+  }
+
   file { $config_file:
     ensure  => 'file',
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
     content => epp("${module_name}/smartd.conf.epp", {
-        'defaults'   => $defaults,
-        'devices'    => smartd::apply_rules($disks, $rules),
-        'devicescan' => $devicescan,
-        'options'    => $options,
+      'defaults'   => $_defaults,
+      'devices'    => smartd::apply_rules($disks, $rules),
+      'devicescan' => $devicescan,
+      'options'    => $options,
     }),
     require => Package[$package_name],
   }

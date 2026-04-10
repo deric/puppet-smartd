@@ -44,6 +44,10 @@ The following parameters are available in the `smartd` class:
 * [`service_name`](#-smartd--service_name)
 * [`service_ensure`](#-smartd--service_ensure)
 * [`devicescan`](#-smartd--devicescan)
+* [`self_check`](#-smartd--self_check)
+* [`randomize_check_hour`](#-smartd--randomize_check_hour)
+* [`check_daily_hour`](#-smartd--check_daily_hour)
+* [`check_weekly_hour`](#-smartd--check_weekly_hour)
 * [`options`](#-smartd--options)
 * [`defaults`](#-smartd--defaults)
 * [`package_options`](#-smartd--package_options)
@@ -124,6 +128,38 @@ Whether enable automatic disk detection.
 Default: false
 
 Default value: `false`
+
+##### <a name="-smartd--self_check"></a>`self_check`
+
+Data type: `Boolean`
+
+Whether enable automatic self-health checks running regularly.
+
+Default value: `false`
+
+##### <a name="-smartd--randomize_check_hour"></a>`randomize_check_hour`
+
+Data type: `Boolean`
+
+Whether check hour should be randomized in interval [0, {check_hour}]
+
+Default value: `true`
+
+##### <a name="-smartd--check_daily_hour"></a>`check_daily_hour`
+
+Data type: `Integer[1, 24]`
+
+Uppper interval for randomized run hour
+
+Default value: `6`
+
+##### <a name="-smartd--check_weekly_hour"></a>`check_weekly_hour`
+
+Data type: `Integer[1, 24]`
+
+Uppper interval for randomized run hour
+
+Default value: `6`
 
 ##### <a name="-smartd--options"></a>`options`
 
