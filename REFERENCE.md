@@ -147,7 +147,7 @@ Default value: `true`
 
 ##### <a name="-smartd--check_daily_hour"></a>`check_daily_hour`
 
-Data type: `Integer[1, 24]`
+Data type: `Integer[0, 23]`
 
 Uppper interval for randomized run hour
 
@@ -155,7 +155,7 @@ Default value: `6`
 
 ##### <a name="-smartd--check_weekly_hour"></a>`check_weekly_hour`
 
-Data type: `Integer[1, 24]`
+Data type: `Integer[0, 23]`
 
 Uppper interval for randomized run hour
 
